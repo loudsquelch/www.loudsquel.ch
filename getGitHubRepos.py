@@ -1,4 +1,5 @@
 import re
+import os
 import requests
 import simplejson as json
 
@@ -83,7 +84,18 @@ def getGitHubRepositoryInfo(apiToken):
   return j
 
 #  Need to work out how to securely store this in Azure
-x = getGitHubRepositoryInfo("<enter_key_here")
+# https://github.com/blog/1509-personal-api-tokens
+x = getGitHubRepositoryInfo("<stick_key_here>")
+exportPath = os.getenv("USERPROFILE") + "\\git-repo-info.json" 
+f = open(exportPath,"w+")
+f.write(json.dumps(x))
+f.close()
+
+f = open(exportPath,"r")
+j=json.loads(f.read())
+f.close()
+
+
 
 # Prints total count of repositories
-print(x['data']['viewer']['repositories']['totalCount'])
+print(j['data']['viewer']['repositories']['totalCount'])
