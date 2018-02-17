@@ -85,17 +85,32 @@ def getGitHubRepositoryInfo(apiToken):
 
 #  Need to work out how to securely store this in Azure
 # https://github.com/blog/1509-personal-api-tokens
-x = getGitHubRepositoryInfo("<stick_key_here>")
+#x = getGitHubRepositoryInfo("<stick_key_here>")
 exportPath = os.getenv("USERPROFILE") + "\\git-repo-info.json" 
-f = open(exportPath,"w+")
-f.write(json.dumps(x))
-f.close()
+#f = open(exportPath,"w+")
+#f.write(json.dumps(x))
+#f.close()
 
 f = open(exportPath,"r")
 j=json.loads(f.read())
 f.close()
 
+# Get repos that have at least one release
+# and therefore warrant being displayed
+htmlTable = '<table style="width:100%">\n'
+htmlTable += '  <tr>\n'
+htmlTable += '    <th>Name</th>\n'
+htmlTable += '    <th>Description</th>\n'
+htmlTable += '    <th>Updated</th>\n'
+htmlTable += '  </tr>\n'
+# print(j['data']['viewer']['repositories']['totalCount'])
+for edge in j['data']['viewer']['repositories']['edges']:
+  if len(edge['node']['releases']['nodes']) >= 1:
+    htmlTable += '  <tr>\n'
+    htmlTable += '    <td><a href="{0}">{1}</a></td>\n'.format(edge['node']['url'], edge['node']['name'])
+    htmlTable += '    <td>{0}</td>\n'.format(edge['node']['description'])
+    htmlTable += '    <td>{0}/td>\n'.format(edge['node']['updatedAt'])
+    htmlTable += '  </tr>\n'
 
-
-# Prints total count of repositories
-print(j['data']['viewer']['repositories']['totalCount'])
+htmlTable += '</table>\n'
+print(htmlTable)
