@@ -5,26 +5,7 @@ import simplejson as json
 
 def getGitHubRepositoryInfo(apiToken):
   url = 'https://api.github.com/graphql'
-  # query = """
-  # {
-  #   viewer {
-  #     repositories(first: 30) {
-  #       totalCount
-  #       pageInfo {
-  #         hasNextPage
-  #         endCursor
-  #       }
-  #       edges {
-  #         node {
-  #           name
-            
-  #         }
-  #       }
-  #     }
-  #   }
-  # }
-  # """
-  firstQuery = """
+  jsonQuery = """
   {
     viewer {
       repositories(first: 5) {
@@ -50,46 +31,33 @@ def getGitHubRepositoryInfo(apiToken):
     }
   }
   """
-  # Sub 'repositories(first: 5) {' with 'repositories(first: 5, after: {{cursor}}) {' if there is pagination
-  nextQuery = """
-  {
-    viewer {
-      repositories(first: 5, after: {{cursor}}) {
-        totalCount
-        pageInfo {
-          hasNextPage
-          endCursor
-        }
-        edges {
-          node {
-            name
-            description
-            updatedAt
-            url
-            releases(first:1) {
-              nodes {
-                name
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-  """
-  query = { 'query' :  firstQuery}
-  headers = {'Authorization': 'token %s' % apiToken}
-  r = requests.post(url=url, json=query, headers=headers)
-  j = json.loads(r.text)
-  return j
+  # Run initial query, limiting results to 5 (low enough to test code works as I only have 9 repos at the time of testing)
+  query = { 'query' : jsonQuery}
+  headers = {'Authorization': 'token {0}'.format(apiToken)}
+  queryResult = requests.post(url=url, json=query, headers=headers)
+  results = json.loads(queryResult.text)
+
+  repos = []
+  for repository in results['data']['viewer']['repositories']:
+    repos.append(repository)
+  # Load next page of results (if there are more than 5 in total)
+  while results['data']['viewer']['repositories']['pageInfo']['hasNextPage'] == True:
+    # This substitution is failing and we are getting stuck in an infiniteloop!!!!!!!
+    nextPageQuery = { 'query' : re.sub('repositories(first: 5)','repositories(first: 5, after: {0})'.format(results['data']['viewer']['repositories']['pageInfo']['endCursor']),jsonQuery)}
+    queryResult = requests.post(url=url, json=nextPageQuery, headers=headers)
+    results = json.loads(queryResult.text)
+    for repository in results['data']['viewer']['repositories']:
+      repos.append(repository)    
+  
+  return repos
 
 #  Need to work out how to securely store this in Azure
 # https://github.com/blog/1509-personal-api-tokens
-#x = getGitHubRepositoryInfo("<stick_key_here>")
-exportPath = os.getenv("USERPROFILE") + "\\git-repo-info.json" 
-#f = open(exportPath,"w+")
-#f.write(json.dumps(x))
-#f.close()
+x = getGitHubRepositoryInfo("")
+exportPath = os.getenv("USERPROFILE") + "\\git-repo-info2.json" 
+f = open(exportPath,"w+")
+f.write(json.dumps(x))
+f.close()
 
 f = open(exportPath,"r")
 j=json.loads(f.read())
