@@ -55,31 +55,32 @@ def getGitHubRepositoryInfo(apiToken):
 
 #  Need to work out how to securely store this in Azure
 # https://github.com/blog/1509-personal-api-tokens
-x = getGitHubRepositoryInfo("")
-exportPath = os.getenv("USERPROFILE") + "\\git-repo-info2.json" 
-f = open(exportPath,"w+")
+x = getGitHubRepositoryInfo("<my_token>")
+wwwroot = os.path.abspath(os.path.dirname(__file__))
+gitHubRepoJsonPath = os.path.join(wwwroot, "github-dump","git-repo-info.json")
+f = open(gitHubRepoJsonPath,"w+")
 f.write(json.dumps(x))
 f.close()
 
-f = open(exportPath,"r")
-j=json.loads(f.read())
-f.close()
+# f = open(gitHubRepoJsonPath,"r")
+# j=json.loads(f.read())
+# f.close()
 
 # Get repos that have at least one release
 # and therefore warrant being displayed
-htmlTable = '<table style="width:100%">\n'
-htmlTable += '  <tr>\n'
-htmlTable += '    <th>Name</th>\n'
-htmlTable += '    <th>Description</th>\n'
-htmlTable += '    <th>Updated</th>\n'
-htmlTable += '  </tr>\n'
-for repository in j:
-  if len(repository['node']['releases']['nodes']) >= 1:
-    htmlTable += '  <tr>\n'
-    htmlTable += '    <td><a href="{0}">{1}</a></td>\n'.format(repository['node']['url'], repository['node']['name'])
-    htmlTable += '    <td>{0}</td>\n'.format(repository['node']['description'])
-    htmlTable += '    <td>{0}/td>\n'.format(repository['node']['updatedAt'])
-    htmlTable += '  </tr>\n'
+# htmlTable = '<table style="width:100%">\n'
+# htmlTable += '  <tr>\n'
+# htmlTable += '    <th>Name</th>\n'
+# htmlTable += '    <th>Description</th>\n'
+# htmlTable += '    <th>Updated</th>\n'
+# htmlTable += '  </tr>\n'
+# for repository in j:
+#   if len(repository['node']['releases']['nodes']) >= 1:
+#     htmlTable += '  <tr>\n'
+#     htmlTable += '    <td><a href="{0}">{1}</a></td>\n'.format(repository['node']['url'], repository['node']['name'])
+#     htmlTable += '    <td>{0}</td>\n'.format(repository['node']['description'])
+#     htmlTable += '    <td>{0}/td>\n'.format(repository['node']['updatedAt'])
+#     htmlTable += '  </tr>\n'
 
-htmlTable += '</table>\n'
-print(htmlTable)
+# htmlTable += '</table>\n'
+# print(htmlTable)
