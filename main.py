@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 def getGitRepositoriesFromFile():
   wwwroot = os.path.abspath(os.path.dirname(__file__))
-  gitHubRepoJsonPath = os.path.join(wwwroot, "github-dump","git-repo-info.json")
+  gitHubRepoJsonPath = os.path.join(wwwroot, "github-dump","github-repo-info.json")
   f = open(gitHubRepoJsonPath,"r")
   j=json.loads(f.read())
   f.close()

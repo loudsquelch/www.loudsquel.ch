@@ -1,2 +1,2 @@
 # www.loudsquel.ch
-Website content
+Website content for www.loudsquel.ch
