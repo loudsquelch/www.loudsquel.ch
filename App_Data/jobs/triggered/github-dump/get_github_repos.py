@@ -136,15 +136,15 @@ def getGitHubRepositoryInfo(apiToken):
 # Initialize vars
 apiToken = ''
 repos = []
-# Path to output data is determined relative to where this script is located ad=nd
-scriptParentPath = os.path.abspath(os.path.dirname(__file__))                       # Gets us the parent dir of the script
-appPath = scriptParentPath.replace('\\App_Data\\jobs\\triggered\\github-dump','')   # Gets us to path app
-outputFilePath = os.path.join(appPath, "github-dump","github-repo-info.json")       # Gets us to the output path
+
 
 # # Retrieve token from environmment variable
 if 'WEBSITE_SITE_NAME' in os.environ:
   # Existence of variable confirms I am running in Azure so pull required information from the
-  # from app settings configuration
+  # from app settings configuration and set appropriate paths
+  # Output file is defined with absolute path because webjob starts in a temp location 
+  # in Azure
+  outputFilePath = "D:\home\site\wwwroot\github-dump\github-repo-info.json"
   # API token for GitHub should be configured in environment variable 'GITHUB_API_TOKEN' site was correctly deployed
   if 'GITHUB_API_TOKEN' in os.environ:
     apiToken = os.environ['GITHUB_API_TOKEN']
@@ -152,8 +152,12 @@ if 'WEBSITE_SITE_NAME' in os.environ:
     # Throw error and exit
     sys.exit("Environment variable 'GITHUB_API_TOKEN' undefined.")
 else:
-  # Assume I am running locally and get apiToken from a file in development environment that is not 
-  # added to source control (assumed to be in ~\Documents\code\local-only\secrets\github-api-token)
+  # Assume I am running locally
+  # Path to output data is determined relative to where this script is located
+  scriptParentPath = os.path.abspath(os.path.dirname(__file__))                       # Gets us the parent dir of the script
+  appPath = scriptParentPath.replace('\\App_Data\\jobs\\triggered\\github-dump','')   # Gets us to path app
+  outputFilePath = os.path.join(appPath, "github-dump","github-repo-info.json")       # Gets us to the output path
+  # Get apiToken from a file in development environment that is not 
   localApiTokenFilePath = os.path.join(appPath,"local","github-api-token")
   try:
     localApiTokenFile = open(localApiTokenFilePath, "r")
