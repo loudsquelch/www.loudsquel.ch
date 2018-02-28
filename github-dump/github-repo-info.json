@@ -1,121 +1,121 @@
 [
-    {
-        "node": {
-            "name": "IPWSP-NE",
-            "description": "Scripts I created during IPWSP-NE (Introducing Python and Web Services Programmability for Network Engineers v3.0) training course and kept for posterity",
-            "updatedAt": "2018-01-31T23:43:32Z",
-            "url": "https://github.com/loudsquelch/IPWSP-NE",
-            "releases": {
-                "nodes": [
-                    {
-                        "name": "Initial Release"
-                    }
-                ]
-            }
-        }
-    },
-    {
-        "node": {
-            "name": "www.loudsquel.ch",
-            "description": "Website content",
-            "updatedAt": "2018-02-01T22:49:06Z",
-            "url": "https://github.com/loudsquelch/www.loudsquel.ch",
-            "releases": {
-                "nodes": []
-            }
-        }
-    },
-    {
-        "node": {
-            "name": "fedora-developer-vm",
-            "description": "This bunch of scripts are used to create a Fedora development VM",
-            "updatedAt": "2018-02-02T16:52:44Z",
-            "url": "https://github.com/loudsquelch/fedora-developer-vm",
-            "releases": {
-                "nodes": [
-                    {
-                        "name": "Initial Release"
-                    }
-                ]
-            }
-        }
-    },
-    {
-        "node": {
-            "name": "PowerShell-Helper-Modules",
-            "description": "A collection of PowerShell modules containing helper modules I regularly use in scripts to perform common tasks such as logging, secure password storage, etc.",
-            "updatedAt": "2018-02-09T15:13:25Z",
-            "url": "https://github.com/loudsquelch/PowerShell-Helper-Modules",
-            "releases": {
-                "nodes": []
-            }
-        }
-    },
-    {
-        "node": {
-            "name": "Test-ADConnectivity",
-            "description": "Tests connectivity to Active Directory domain controllers",
-            "updatedAt": "2018-02-09T17:05:21Z",
-            "url": "https://github.com/loudsquelch/Test-ADConnectivity",
-            "releases": {
-                "nodes": [
-                    {
-                        "name": "Initial Release"
-                    }
-                ]
-            }
-        }
-    },
-    {
-        "node": {
-            "name": "PowerShell-Helper-Scripts",
-            "description": "A collection of PowerShell scripts I regularly use to get my work done",
-            "updatedAt": "2018-02-09T17:08:31Z",
-            "url": "https://github.com/loudsquelch/PowerShell-Helper-Scripts",
-            "releases": {
-                "nodes": []
-            }
-        }
-    },
-    {
-        "node": {
-            "name": "LDAPSUserSync",
-            "description": "Synchronise users from a source Active Directory domain to a destination Active Directory domain via LDAPS",
-            "updatedAt": "2018-02-09T18:12:17Z",
-            "url": "https://github.com/loudsquelch/LDAPSUserSync",
-            "releases": {
-                "nodes": [
-                    {
-                        "name": "Initial Release"
-                    }
-                ]
-            }
-        }
-    },
-    {
-        "node": {
-            "name": "HP-3Par-WSAPI",
-            "description": "A module and scripts for interacting with HP 3Par arrays via the RESTful web service.  Originally written against API version 1.4.2.",
-            "updatedAt": "2018-02-12T16:24:55Z",
-            "url": "https://github.com/loudsquelch/HP-3Par-WSAPI",
-            "releases": {
-                "nodes": [
-                    {
-                        "name": "Initial (non-production) release"
-                    }
-                ]
-            }
-        }
-    },
-    {
-        "node": {
-            "name": "PowerCLI",
-            "description": "A bunch of PowerCLI scripts I am keeping for reference/posterity",
-            "updatedAt": "2018-02-19T17:05:45Z",
-            "url": "https://github.com/loudsquelch/PowerCLI",
-            "releases": {
-                "nodes": []
-            }
-        }
+  {
+    "node": {
+      "description": "Scripts I created during IPWSP-NE (Introducing Python and Web Services Programmability for Network Engineers v3.0) training course and kept for posterity",
+      "name": "IPWSP-NE",
+      "releases": {
+        "nodes": [
+          {
+            "name": "Initial Release"
+          }
+        ]
+      },
+      "updatedAt": "2018-01-31T23:43:32Z",
+      "url": "https://github.com/loudsquelch/IPWSP-NE"
     }
+  },
+  {
+    "node": {
+      "description": "Website content",
+      "name": "www.loudsquel.ch",
+      "releases": {
+        "nodes": []
+      },
+      "updatedAt": "2018-02-01T22:49:06Z",
+      "url": "https://github.com/loudsquelch/www.loudsquel.ch"
+    }
+  },
+  {
+    "node": {
+      "description": "This bunch of scripts are used to create a Fedora development VM",
+      "name": "fedora-developer-vm",
+      "releases": {
+        "nodes": [
+          {
+            "name": "Initial Release"
+          }
+        ]
+      },
+      "updatedAt": "2018-02-02T16:52:44Z",
+      "url": "https://github.com/loudsquelch/fedora-developer-vm"
+    }
+  },
+  {
+    "node": {
+      "description": "A collection of PowerShell modules containing helper modules I regularly use in scripts to perform common tasks such as logging, secure password storage, etc.",
+      "name": "PowerShell-Helper-Modules",
+      "releases": {
+        "nodes": []
+      },
+      "updatedAt": "2018-02-09T15:13:25Z",
+      "url": "https://github.com/loudsquelch/PowerShell-Helper-Modules"
+    }
+  },
+  {
+    "node": {
+      "description": "Tests connectivity to Active Directory domain controllers",
+      "name": "Test-ADConnectivity",
+      "releases": {
+        "nodes": [
+          {
+            "name": "Initial Release"
+          }
+        ]
+      },
+      "updatedAt": "2018-02-09T17:05:21Z",
+      "url": "https://github.com/loudsquelch/Test-ADConnectivity"
+    }
+  },
+  {
+    "node": {
+      "description": "A collection of PowerShell scripts I regularly use to get my work done",
+      "name": "PowerShell-Helper-Scripts",
+      "releases": {
+        "nodes": []
+      },
+      "updatedAt": "2018-02-09T17:08:31Z",
+      "url": "https://github.com/loudsquelch/PowerShell-Helper-Scripts"
+    }
+  },
+  {
+    "node": {
+      "description": "Synchronise users from a source Active Directory domain to a destination Active Directory domain via LDAPS",
+      "name": "LDAPSUserSync",
+      "releases": {
+        "nodes": [
+          {
+            "name": "Initial Release"
+          }
+        ]
+      },
+      "updatedAt": "2018-02-09T18:12:17Z",
+      "url": "https://github.com/loudsquelch/LDAPSUserSync"
+    }
+  },
+  {
+    "node": {
+      "description": "A module and scripts for interacting with HP 3Par arrays via the RESTful web service.  Originally written against API version 1.4.2.",
+      "name": "HP-3Par-WSAPI",
+      "releases": {
+        "nodes": [
+          {
+            "name": "Initial (non-production) release"
+          }
+        ]
+      },
+      "updatedAt": "2018-02-12T16:24:55Z",
+      "url": "https://github.com/loudsquelch/HP-3Par-WSAPI"
+    }
+  },
+  {
+    "node": {
+      "description": "A bunch of PowerCLI scripts I am keeping for reference/posterity",
+      "name": "PowerCLI",
+      "releases": {
+        "nodes": []
+      },
+      "updatedAt": "2018-02-19T17:05:45Z",
+      "url": "https://github.com/loudsquelch/PowerCLI"
+    }
+  }
 ]
