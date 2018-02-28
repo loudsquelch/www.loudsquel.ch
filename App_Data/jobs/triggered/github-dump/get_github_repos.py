@@ -1,3 +1,7 @@
+'''
+This is designed to be run as a webjob as per:
+https://github.com/projectkudu/kudu/wiki/WebJobs
+'''
 import os
 import requests
 import simplejson as json
@@ -58,22 +62,69 @@ def getGitHubRepositoryInfo(apiToken):
   repositoriesArgs = 'first: 5'
   query = { 'query' : jsonQuery.replace('{{ repositoriesArgs }}', repositoriesArgs)}
   headers = {'Authorization': 'token {0}'.format(apiToken)}
-  queryResult = requests.post(url=url, json=query, headers=headers)
-  results = json.loads(queryResult.text)
+  
+  try:
+    queryResult = requests.post(url=url, json=query, headers=headers)
+  except requests.exceptions.RequestException as e:
+    print("Failed to connect to {0}. Error: {1}".format(url,e))
+    return None
+  except:
+    print("Unexpected error: {0}".format(sys.exc_info()[0]))
+    return None
+  try:
+    results = json.loads(queryResult.text)
+    print()
+    if 'message' in results:
+      print("Query failed.  Error message: {0}".format(results['message']))
+      return None
+    elif results['data'] is None:
+      # Let's not go overboard - the first error will be sufficient to start troubleshooting...
+      print("Query failed.  Error message: {0}".format(results['errors'][0]['message']))
+      return None
+  except:
+    print("Unknown error occured. Query result: {0}".format(results))
+    return None
 
   repos = []
-  for repository in results['data']['viewer']['repositories']['edges']:
-    repos.append(repository)
+  try:
+    for repository in results['data']['viewer']['repositories']['edges']:
+      repos.append(repository)
+  except:
+    print("Error occurred whilst enumerating query results: {0}".format(results))
 
   # Load next page of results (if there are more than 5 in total)
+  # Arghhh!!! should have written this as a recursive function, can't be bothered to change it now! Ctrl+C, Ctrl+V...
   while results['data']['viewer']['repositories']['pageInfo']['hasNextPage'] == True:
     # This substitution is failing and we are getting stuck in an infiniteloop!!!!!!!
     repositoriesArgs = 'first: 5, after: "' + results['data']['viewer']['repositories']['pageInfo']['endCursor'] + '"'
     nextPageQuery = { 'query' : jsonQuery.replace('{{ repositoriesArgs }}', repositoriesArgs)}
-    queryResult = requests.post(url=url, json=nextPageQuery, headers=headers)
-    results = json.loads(queryResult.text)
-    for repository in results['data']['viewer']['repositories']['edges']:
-      repos.append(repository)    
+    try:
+      queryResult = requests.post(url=url, json=nextPageQuery, headers=headers)
+    except requests.exceptions.RequestException as e:
+      print("Failed to connect to {0}. Error: {1}".format(url,e))
+      return None
+    except:
+      print("Unexpected error: {0}".format(sys.exc_info()[0]))
+      return None
+    try:
+      results = json.loads(queryResult.text)
+      print()
+      if 'message' in results:
+        print("Query failed.  Error message: {0}".format(results['message']))
+        return None
+      elif results['data'] is None:
+        # Let's not go overboard - the first error will be sufficient to start troubleshooting...
+        print("Query failed.  Error message: {0}".format(results['errors'][0]['message']))
+        return None
+    except:
+      print("Unknown error occured. Query result: {0}".format(results))
+      return None
+
+    try:
+      for repository in results['data']['viewer']['repositories']['edges']:
+        repos.append(repository)
+    except:
+      print("Error occurred whilst enumerating query results: {0}".format(results))
   
   return repos
 
@@ -115,18 +166,22 @@ if apiToken == '':
 
 # Connect to GitHub and pull back repository info
 repos = getGitHubRepositoryInfo(apiToken)
-# Write result out to file
-try:
-  outFile = open(outputFilePath, "w+")
+if repos != None:
+  # Write result out to file
   try:
-    outFile.write(json.dumps(repos))
+    outFile = open(outputFilePath, "w+")
+    try:
+      outFile.write(json.dumps(repos,indent=2,sort_keys=True))
+      print("Dumped query result to {0}".format(outputFilePath))
+    except IOError as e:
+      print("Failed to write to file. Error {0}: {1}".format(e.errno, e.strerror))
+    except:
+      print("Unexpected error: {0}".format(sys.exc_info()[0]))
+    finally:
+      outFile.close()
   except IOError as e:
-    print("Failed to write to file. Error {0}: {1}".format(e.errno, e.strerror))
+    print("Failed to open file for writing. Error {0}: {1}".format(e.errno, e.strerror))
   except:
     print("Unexpected error: {0}".format(sys.exc_info()[0]))
-  finally:
-    outFile.close()
-except IOError as e:
-  print("Failed to open file for writing. Error {0}: {1}".format(e.errno, e.strerror))
-except:
-  print("Unexpected error: {0}".format(sys.exc_info()[0]))
+
+print("Done.")
