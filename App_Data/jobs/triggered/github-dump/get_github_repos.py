@@ -2,10 +2,15 @@
 This is designed to be run as a webjob as per:
 https://github.com/projectkudu/kudu/wiki/WebJobs
 '''
+
+# Thank you https://lnx.azurewebsites.net/python-site-packages-in-azure-python-webjobs/
+import sys
+sitepackage = "D:\home\site\wwwroot\env\Lib\site-packages"
+sys.path.append(sitepackage)
+
 import os
 import requests
 import simplejson as json
-import sys
 
 def getGitHubRepositoryInfo(apiToken):
   '''Gets information pertaining to repositories in a GitHub account
