@@ -188,5 +188,5 @@ if repos != None:
     print("Failed to open file for writing. Error {0}: {1}".format(e.errno, e.strerror))
   except:
     print("Unexpected error: {0}".format(sys.exc_info()[0]))
-
-print("Done.")
+else:
+  sys.exit("Failed to dump out GitHub repository info.")
