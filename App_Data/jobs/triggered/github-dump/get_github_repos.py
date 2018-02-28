@@ -179,13 +179,13 @@ if repos != None:
       outFile.write(json.dumps(repos,indent=2,sort_keys=True))
       print("Dumped query result to {0}".format(outputFilePath))
     except IOError as e:
-      sys.exit("Failed to write to file {0}. Error {1}".format(outputFilePath, e))
+      sys.exit("Failed to write to file {0}. Error: {1}".format(outputFilePath, e))
     except:
       sys.exit("Unexpected error writing to {0}: {1}".format(outputFilePath,sys.exc_info()[0]))
     finally:
       outFile.close()
   except IOError as e:
-    sys.exit("Failed to open file {0} for writing. Error {1}: {2}".format(outputFilePath, e))
+    sys.exit("Failed to open file {0} for writing. Error: {1}".format(outputFilePath, e))
   except:
     sys.exit("Unexpected error: {0}".format(sys.exc_info()[0]))
 else:
