@@ -179,14 +179,14 @@ if repos != None:
       outFile.write(json.dumps(repos,indent=2,sort_keys=True))
       print("Dumped query result to {0}".format(outputFilePath))
     except IOError as e:
-      print("Failed to write to file. Error {0}: {1}".format(e.errno, e.strerror))
+      sys.exit("Failed to write to file {0}. Error {1}".format(outputFilePath, e))
     except:
-      print("Unexpected error: {0}".format(sys.exc_info()[0]))
+      sys.exit("Unexpected error writing to {0}: {1}".format(outputFilePath,sys.exc_info()[0]))
     finally:
       outFile.close()
   except IOError as e:
-    print("Failed to open file for writing. Error {0}: {1}".format(e.errno, e.strerror))
+    sys.exit("Failed to open file {0} for writing. Error {1}: {2}".format(outputFilePath, e))
   except:
-    print("Unexpected error: {0}".format(sys.exc_info()[0]))
+    sys.exit("Unexpected error: {0}".format(sys.exc_info()[0]))
 else:
-  sys.exit("Failed to dump out GitHub repository info.")
+  sys.exit("No GitHub repository info to dump out to file.")
