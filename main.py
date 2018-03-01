@@ -54,13 +54,14 @@ def getGitRepositoriesFromFile():
   htmlTable += '    <th>Updated</th>\n'
   htmlTable += '  </tr>\n'
   for repository in repositories:
+    # Only render if there are 1 or more releases associated with the repository
     if len(repository['node']['releases']['nodes']) >= 1:
       htmlTable += '  <tr>\n'
       htmlTable += '    <td><a href="{0}">{1}</a></td>\n'.format(repository['node']['url'], repository['node']['name'])
       htmlTable += '    <td>{0}</td>\n'.format(repository['node']['description'])
       htmlTable += '    <td>{0}</td>\n'.format(repository['node']['updatedAt'])
       htmlTable += '  </tr>\n'
-    htmlTable += '</table>\n'
+  htmlTable += '</table>\n'
   html += htmlTable
   html += '</body>\n'
   html += '</html>\n'
