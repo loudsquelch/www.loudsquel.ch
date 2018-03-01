@@ -167,8 +167,11 @@ else:
   except:
     print("Unexpected error: {0}".format(sys.exc_info()[0]))
   finally:
-    localApiTokenFile.close()
-
+    try:
+      localApiTokenFile.close()
+    except:
+      pass
+    
 # Without a token I need to bail!
 if apiToken == '':
   sys.exit("Failed to retrieve API token for GitHub authentication")
