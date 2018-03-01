@@ -137,7 +137,6 @@ def getGitHubRepositoryInfo(apiToken):
 apiToken = ''
 repos = []
 
-
 # # Retrieve token from environmment variable
 if 'WEBSITE_SITE_NAME' in os.environ:
   # Existence of variable confirms I am running in Azure so pull required information from the
