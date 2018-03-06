@@ -67,9 +67,9 @@ def getGitRepositoriesFromFile():
   return html
 
 # Required for Let's Encrypt cert auto-renewal
-@app.route('/.wellknown/<path:filename>')
-def dotWellknown(filename):
-  dotWellKnownPath = os.path.join(app.root_path, 'static', '.wellknown')
+@app.route('/.well-known/<path:filename>')
+def letsencryptchallenges(filename):
+  dotWellKnownPath = os.path.join(app.root_path, '.well-known')
   # return "{0} {1} {2}".format(app.root_path,filename,dotWellKnownPath)
   if filename[-1] == '/':
     # default to returning index.html if no filename is specified
