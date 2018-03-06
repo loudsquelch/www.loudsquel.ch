@@ -2,10 +2,9 @@ import os
 import simplejson as json
 import sys
 
+from flask import Flask, send_from_directory
 from flask_cache import Cache
-from flask import Flask
 from time import sleep
-
 
 # simple cache type is recommended single process dev app
 app = Flask(__name__)
@@ -66,6 +65,17 @@ def getGitRepositoriesFromFile():
   html += '</body>\n'
   html += '</html>\n'
   return html
+
+# Required for Let's Encrypt cert auto-renewal
+@app.route('/.wellknown/<path:filename>')
+def wellknown(filename):
+  dotWellKnownPath = os.path.join(app.root_path, 'static', '.wellknown')
+  # return "{0} {1} {2}".format(app.root_path,filename,dotWellKnownPath)
+  if filename[-1] == '/':
+    # default to returning index.html if no filename is specified
+    return send_from_directory(dotWellKnownPath, filename + 'index.html')
+  else:
+    return send_from_directory(dotWellKnownPath, filename)
 
 @app.route('/')
 def index():
